@@ -51,5 +51,5 @@ if (!ini_get('date.timezone')) {
 require __DIR__ . '/src/autoload.php';
 
 $factory = new \TheSeer\Autoload\Factory();
-$factory->getCLI()->run();
-exit(0);
+$rc = $factory->getCLI()->run();
+exit($rc);
