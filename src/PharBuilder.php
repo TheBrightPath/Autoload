@@ -105,7 +105,13 @@ namespace TheSeer\Autoload {
 
             $basedir = $this->basedir ? $this->basedir : $this->directories[0];
             foreach($this->directories as $directory) {
-                $phar->buildFromIterator($this->scanner->__invoke($directory), $basedir);
+                if (file_exists("$directory/")) {
+                    $phar->buildFromIterator($this->scanner->__invoke($directory), $basedir);
+                } else {
+                    $comparator = new PathComparator(array($basedir, $directory));
+                    $localName = str_replace($comparator->getCommonBase().'/', '', $directory);
+                    $phar->addFile($directory, $localName);
+                }
             }
 
             if ($this->compression !== \Phar::NONE) {
