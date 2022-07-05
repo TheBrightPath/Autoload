@@ -25,9 +25,9 @@ namespace TheSeer\Autoload {
             }
             $result = $this->directories[0];
             foreach($this->directories as $dir) {
-                $result = substr($dir, 0, $this->commonPrefix($result, $dir));
+                $result = substr($dir, 0, $this->commonPrefix($result, $dir)).'/';
             }
-            return ($result ?: '/');
+            return (rtrim($result, '/') ?: '/');
         }
 
 
