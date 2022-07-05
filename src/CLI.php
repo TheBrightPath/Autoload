@@ -73,14 +73,18 @@ namespace TheSeer\Autoload {
          *
          * @return int exit code
          */
-        public function run() {
+        public function run(array $args = null) {
 
             try {
 
                 $this->preBootstrap();
 
+                if (!empty($args)) {
+                    array_unshift($args, __FILE__);
+                }
+
                 $input = $this->setupInput();
-                $input->process();
+                $input->process($args);
 
                 if ($input->getOption('help')->value === TRUE) {
                     $this->showVersion();
